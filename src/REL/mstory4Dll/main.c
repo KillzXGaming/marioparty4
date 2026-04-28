@@ -111,15 +111,19 @@ s32 lbl_1_data_590[] = {
 	0, 0, 0, 0, 0, 0,
 };
 
-s32 lbl_1_data_5A8[] = {
-	DATADIR_W01,
-	DATADIR_W02,
-	DATADIR_W03,
-	DATADIR_W04,
-	DATADIR_W05,
-	DATADIR_W06,
-	DATADIR_W10
-};
+#if EXPAND_BOARD_PATCH
+	s32 lbl_1_data_5A8[] = WORLD_OVERLAY_TABLE;
+#else
+	s32 lbl_1_data_5A8[] = {
+		DATADIR_W01,
+		DATADIR_W02,
+		DATADIR_W03,
+		DATADIR_W04,
+		DATADIR_W05,
+		DATADIR_W06,
+		DATADIR_W10
+	};
+#endif
 
 #if VERSION_PAL
 

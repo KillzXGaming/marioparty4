@@ -1,4 +1,5 @@
 #include "version.h"
+#include "party_editor/main.h"
 
 OVL_DEFINE(OVL__MINI, "dll/_minigameDLL.rel")
 OVL_DEFINE(OVL_BOOT, "dll/bootdll.rel")
@@ -106,3 +107,6 @@ OVL_DEFINE(OVL_W10, "dll/w10dll.rel")
 OVL_DEFINE(OVL_W20, "dll/w20dll.rel")
 OVL_DEFINE(OVL_W21, "dll/w21dll.rel")
 OVL_DEFINE(OVL_ZTAR, "dll/ztardll.rel")
+#if NON_MATCHING
+OVL_DEFINE(OVL_W30, "dll/w30Dll.rel")
+#endif

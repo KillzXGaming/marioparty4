@@ -26,6 +26,10 @@
 #include "game/window.h"
 #include "game/wipe.h"
 
+#if EXPAND_BOARD_PATCH
+#include "party_editor/main.h"
+#endif
+
 #include "ext_math.h"
 
 typedef struct {
@@ -135,11 +139,33 @@ static s32 callMotTbl[] = { DATA_MAKE_NUM(DATADIR_MARIOMOT, 82), DATA_MAKE_NUM(D
 static char *callHookTbl[] = { "c000m01-itemhook-r", "c001m01-itemhook-r", "c002m01-itemhook-r", "c003m01-itemhook-r", "c004m01-itemhook-r",
     "c005m01-itemhook-r", "c006m01-itemhook-r", "c007m01-itemhook-r" };
 
-static s32 callAttackMotTbl[] = { DATA_MAKE_NUM(DATADIR_W01, 31), DATA_MAKE_NUM(DATADIR_W02, 5), DATA_MAKE_NUM(DATADIR_W03, 29),
-    DATA_MAKE_NUM(DATADIR_W04, 9), DATA_MAKE_NUM(DATADIR_W05, 7), DATA_MAKE_NUM(DATADIR_W06, 19) };
+static s32 callAttackMotTbl[] = {
+    DATA_MAKE_NUM(DATADIR_W01, 31), 
+    DATA_MAKE_NUM(DATADIR_W02, 5), 
+    DATA_MAKE_NUM(DATADIR_W03, 29),
+    DATA_MAKE_NUM(DATADIR_W04, 9), 
+    DATA_MAKE_NUM(DATADIR_W05, 7), 
+    DATA_MAKE_NUM(DATADIR_W06, 19) ,
+#if EXPAND_BOARD_PATCH
+    DATA_MAKE_NUM(DATADIR_W06, 19),
+    DATA_MAKE_NUM(DATADIR_W06, 19),
+    CUSTOM_CALL_ATTACK_MOT1
+#endif
+};
 
-static s32 callAttackMotTbl2[] = { DATA_MAKE_NUM(DATADIR_W01, 32), DATA_MAKE_NUM(DATADIR_W02, 6), DATA_MAKE_NUM(DATADIR_W03, 30),
-    DATA_MAKE_NUM(DATADIR_W04, 10), DATA_MAKE_NUM(DATADIR_W05, 8), DATA_MAKE_NUM(DATADIR_W06, 20) };
+static s32 callAttackMotTbl2[] = {
+    DATA_MAKE_NUM(DATADIR_W01, 32),
+    DATA_MAKE_NUM(DATADIR_W02, 6),
+    DATA_MAKE_NUM(DATADIR_W03, 30),
+    DATA_MAKE_NUM(DATADIR_W04, 10),
+    DATA_MAKE_NUM(DATADIR_W05, 8),
+    DATA_MAKE_NUM(DATADIR_W06, 20),
+#if EXPAND_BOARD_PATCH
+    DATA_MAKE_NUM(DATADIR_W06, 20),
+    DATA_MAKE_NUM(DATADIR_W06, 20),
+    CUSTOM_CALL_ATTACK_MOT2
+#endif
+};
 
 static s32 suitMotTbl[][2] = { { DATA_MAKE_NUM(DATADIR_BKOOPASUIT, 1), DATA_MAKE_NUM(DATADIR_BKOOPASUIT, 2) },
     { DATA_MAKE_NUM(DATADIR_BKOOPASUIT, 4), DATA_MAKE_NUM(DATADIR_BKOOPASUIT, 5) },

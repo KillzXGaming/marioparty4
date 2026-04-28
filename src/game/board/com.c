@@ -719,7 +719,7 @@ s32 BoardComJunctionInputGet(s32 item, Vec *input, s32 num_dirs, float *dirs) {
         choose_path = 0;
     }
     if (choose_path != 0) {
-        if (board >= 0 && board <= 5) {
+        if (board >= 0 && board <= 5 || BOARD_IS_CUSTOM) {
             space_next = BoardComPathBestGet(space);
         } else if (board == 7) {
             space_next = BoardComPathBestGetFlag(space, 0x10000000, 10);

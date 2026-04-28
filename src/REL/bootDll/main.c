@@ -15,9 +15,9 @@
 #include "game/window.h"
 #include "game/wipe.h"
 #include "math.h"
-
-
 #include "data_num/title.h"
+#include "party_editor/main.h"
+#include "party_editor/auto_boot_mode.h"
 
 #define HU_PAD_BTN_ALL (HuPadBtn[0] | HuPadBtn[1] | HuPadBtn[2] | HuPadBtn[3])
 #define HU_PAD_BTNDOWN_ALL (HuPadBtnDown[0] | HuPadBtnDown[1] | HuPadBtnDown[2] | HuPadBtnDown[3])
@@ -112,6 +112,12 @@ void BootExec(void)
         }
     }
     #endif
+
+#if AUTO_BOOT_MODE
+    PartyEditorBoot(objman);
+    return;
+#endif
+
     group = HuSprGrpCreate(2);
     data = HuSprAnimRead(NintendoDataDecode());
     sprite_nintendo = HuSprCreate(data, 0, 0);

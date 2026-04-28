@@ -1020,6 +1020,9 @@ void BoardMGSetupTutorialExec(void);
 void BoardShopTutorialExec(void);
 void BoardLotteryTutorialExec(void);
 void BoardBooHouseTutorialExec(void);
+#if NON_MATCHING
+void PartyEditorBoot(void);
+#endif
 extern void _kerjmp_OSDumpStopwatch(void);
 extern void _kerjmp_PSVECDotProduct(void);
 extern void _kerjmp_PSVECDistance(void);
@@ -2039,6 +2042,9 @@ extern void _kerjmp_BoardMGSetupTutorialExec(void);
 extern void _kerjmp_BoardShopTutorialExec(void);
 extern void _kerjmp_BoardLotteryTutorialExec(void);
 extern void _kerjmp_BoardBooHouseTutorialExec(void);
+#if NON_MATCHING
+extern void _kerjmp_PartyEditorBoot(void);
+#endif
 
 asm void _kerent(void) {
     #ifdef __MWERKS__ // clang-format off
@@ -4085,5 +4091,10 @@ asm void _kerent(void) {
     b BoardLotteryTutorialExec
     entry _kerjmp_BoardBooHouseTutorialExec
     b BoardBooHouseTutorialExec
+
+#if NON_MATCHING
+    entry _kerjmp_PartyEditorBoot
+    b PartyEditorBoot
+#endif
     #endif
 }

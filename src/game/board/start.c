@@ -97,7 +97,7 @@ static s32 hitFX[4] = {
     -1, -1, -1, -1
 };
 
-static s32 startMesTbl[9][5] = {
+static s32 startMesTbl[MAX_BOARD_COUNT][5] = {
     { MAKE_MESSID(0x15, 0x01), MAKE_MESSID(0x15, 0x07), MAKE_MESSID(0x15, 0x0D), MAKE_MESSID(0x15, 0x16), MAKE_MESSID(0x15, 0x1C) },
     { MAKE_MESSID(0x15, 0x02), MAKE_MESSID(0x15, 0x08), MAKE_MESSID(0x15, 0x0E), MAKE_MESSID(0x15, 0x17), MAKE_MESSID(0x15, 0x1D) },
     { MAKE_MESSID(0x15, 0x03), MAKE_MESSID(0x15, 0x09), MAKE_MESSID(0x15, 0x0F), MAKE_MESSID(0x15, 0x18), MAKE_MESSID(0x15, 0x1E) },
@@ -106,13 +106,19 @@ static s32 startMesTbl[9][5] = {
     { MAKE_MESSID(0x15, 0x06), MAKE_MESSID(0x15, 0x0C), MAKE_MESSID(0x15, 0x12), MAKE_MESSID(0x15, 0x1B), MAKE_MESSID(0x15, 0x21) },
     { MAKE_MESSID(0x15, 0x01), MAKE_MESSID(0x15, 0x07), MAKE_MESSID(0x15, 0x0D), MAKE_MESSID(0x15, 0x16), MAKE_MESSID(0x15, 0x1C) },
     { MAKE_MESSID(0x15, 0x33), MAKE_MESSID(0x15, 0x34), MAKE_MESSID(0x15, 0x35), MAKE_MESSID(0x15, 0x36), MAKE_MESSID(0x15, 0x37) },
-    { MAKE_MESSID(0x15, 0x3B), MAKE_MESSID(0x15, 0x3C), MAKE_MESSID(0x15, 0x3D), MAKE_MESSID(0x15, 0x3E), MAKE_MESSID(0x15, 0x3F) }
+    { MAKE_MESSID(0x15, 0x3B), MAKE_MESSID(0x15, 0x3C), MAKE_MESSID(0x15, 0x3D), MAKE_MESSID(0x15, 0x3E), MAKE_MESSID(0x15, 0x3F) },
+#if EXPAND_BOARD_PATCH
+    CUSTOM_BOARD_START_MESS
+#endif
 };
 
 static s32 logoSprTbl[] = {
     DATA_MAKE_NUM(DATADIR_BOARD, 0x57), DATA_MAKE_NUM(DATADIR_BOARD, 0x58), DATA_MAKE_NUM(DATADIR_BOARD, 0x59),
     DATA_MAKE_NUM(DATADIR_BOARD, 0x5A), DATA_MAKE_NUM(DATADIR_BOARD, 0x5B), DATA_MAKE_NUM(DATADIR_BOARD, 0x5C),
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x57), DATA_MAKE_NUM(DATADIR_BOARD, 0x5D), DATA_MAKE_NUM(DATADIR_BOARD, 0x5E)
+    DATA_MAKE_NUM(DATADIR_BOARD, 0x57), DATA_MAKE_NUM(DATADIR_BOARD, 0x5D), DATA_MAKE_NUM(DATADIR_BOARD, 0x5E),
+#if EXPAND_BOARD_PATCH
+    CUSTOM_BOARD_START_LOGO
+#endif
 };
 
 void BoardStartExec(void) {
@@ -147,7 +153,7 @@ static void ExecStart(void) {
     BoardCameraNearFarSet(100.0f, 23000.0f);
     GWSystem.player_curr = -1;
     startSpace = BoardSpaceFlagPosGet(0, 0x80000000, &spacePos);
-    if ((GWBoardGet() == BOARD_ID_MAIN3 || GWBoardGet() == BOARD_ID_MAIN6) && boardLightResetHook) {
+    if ((GWBoardGet() == BOARD_ID_MAIN3 || GWBoardGet() == BOARD_ID_MAIN6 || CUSTOM_RESET_LIGHT_HOOK) && boardLightResetHook) {
         boardLightResetHook();
     }
     for (i = 0; i < 4; i++) {
@@ -165,7 +171,7 @@ static void ExecStart(void) {
         streamStatus = HuAudSStreamPlay(5);
         ShowLogo();
         FocusStart();
-        if ((GWBoardGet() == BOARD_ID_MAIN3 || GWBoardGet() == BOARD_ID_MAIN6) && boardLightSetHook) {
+        if ((GWBoardGet() == BOARD_ID_MAIN3 || GWBoardGet() == BOARD_ID_MAIN6 || CUSTOM_RESET_LIGHT_HOOK) && boardLightSetHook) {
             boardLightSetHook();
         }
         BoardCameraMotionWait();
@@ -793,6 +799,11 @@ static void InitCamera(void) {
         case BOARD_ID_EXTRA2:
             camStartFocusPos.z -= 250.0f;
             camStartFocusPos.x -= 150.0f;
+            break;
+        default:
+#if EXPAND_BOARD_PATCH
+            CUSTOM_CAMERA_FOCUS
+#endif
             break;
     }
     camFocus = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 0x0A), NULL, 0);

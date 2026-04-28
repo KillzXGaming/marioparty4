@@ -20,7 +20,7 @@
 static s16 houseMdl[6];
 
 // data
-static s32 hostMesTbl[6][6] = {
+static s32 hostMesTbl[MAX_BOARD6_COUNT][6] = {
     {
         DATA_MAKE_NUM(DATADIR_BOARD, 0x0C),
         DATA_MAKE_NUM(DATADIR_BOARD, 0x0D),
@@ -69,6 +69,36 @@ static s32 hostMesTbl[6][6] = {
         DATA_MAKE_NUM(DATADIR_BOARD, 0x2E),
         DATA_MAKE_NUM(DATADIR_BOARD, 0x2F),
     },
+#if EXPAND_BOARD_PATCH
+    // Dummy slot for bowser board
+    {
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2A),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2B),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2C),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2D),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2E),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2F),
+    },
+    // Dummy slots for the 2 special boards
+    {
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2A),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2B),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2C),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2D),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2E),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2F),
+    },
+    {
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2A),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2B),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2C),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2D),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2E),
+        DATA_MAKE_NUM(DATADIR_BOARD, 0x2F),
+    },
+    // Custom slots
+    CUSTOM_BOO_HOUSE_HOST_MESS
+#endif
 };
 static BoardModelParam houseMdlTbl[6] = {
     { DATA_MAKE_NUM(DATADIR_BYOKODORI, 0x00), { 0, 1, 0, 0, 0 }, 0xFFFF },

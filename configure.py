@@ -15,6 +15,7 @@
 import argparse
 import sys
 from pathlib import Path
+from typing import Any, Dict, List
 
 # from typing import Any, Dict, List
 from tools.project import (
@@ -417,6 +418,17 @@ MATCH_PAL = ["GMPP01_00", "GMPP01_01", "GMPP01_02"]
 def MatchingFor(*versions):
     return config.version in versions
 
+def link_order_callback(module_id: int, objects: List[str]) -> List[str]:
+    # Don't modify the link order for matching builds
+    if not config.non_matching:
+        return objects
+    if module_id == 0:  # DOL
+        return objects + [
+        "party_editor/auto_boot_mode.c",
+        "party_editor/config.c",
+        "party_editor/dvd.c",
+        ]
+    return objects
 
 config.warn_missing_config = True
 config.warn_missing_source = False
@@ -506,6 +518,9 @@ config.libs = [
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/com_path.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/board/tutorial.c"),
             Object(MatchingFor(*MATCH_USA, *MATCH_PAL), "game/kerent.c"),
+            Object(Matching, "party_editor/auto_boot_mode.c"),
+            Object(Matching, "party_editor/config.c"),
+            Object(Matching, "party_editor/dvd.c"),
         ],
     },
     DolphinLib(
@@ -1729,6 +1744,16 @@ config.libs = [
         },
     ),
 ]
+
+if config.non_matching:
+    config.libs.append(Rel(
+        "w30Dll",  # Custom
+        objects={
+            Object(Matching, "REL/w30Dll/main.c"),
+        },
+    ))
+
+config.link_order_callback = link_order_callback
 
 # Optional extra categories for progress tracking
 config.progress_categories = []

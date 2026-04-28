@@ -442,7 +442,10 @@ SNDGRPTBL sndGrpTable[] = {
     { OVL_ZTAR, -1, 0,  1, -1, -1 },
     { OVL_E3SETUP, 0, 0,  1, -1, -1 },
     { OVL_STAFF, -1, 0,  1, -1, -1 },
-    { OVL_INVALID, -1, 0,  1, 0, 0 }
+    { OVL_INVALID, -1, 0,  1, 0, 0 },
+#if EXPAND_BOARD_PATCH
+    CUSTOM_AUDIO_SND
+#endif
 };
 
 void HuAudDllSndGrpSet(u16 ovl) {

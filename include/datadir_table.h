@@ -1,3 +1,5 @@
+#include "version.h"
+
 DATADIR_DEFINE(E3SETUP, "data/E3setup.bin")
 DATADIR_DEFINE(BBATTLE, "data/bbattle.bin")
 DATADIR_DEFINE(BGUEST, "data/bguest.bin")
@@ -138,3 +140,7 @@ DATADIR_DEFINE(YOSHIMDL0, "data/yoshimdl0.bin")
 DATADIR_DEFINE(YOSHIMDL1, "data/yoshimdl1.bin")
 DATADIR_DEFINE(YOSHIMOT, "data/yoshimot.bin")
 DATADIR_DEFINE(ZTAR, "data/ztar.bin")
+// Custom
+#if NON_MATCHING
+DATADIR_DEFINE(W30, "data/w30.bin")
+#endif

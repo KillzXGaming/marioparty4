@@ -74,7 +74,7 @@ static Process *starProc;
 static s16 starParman = -1;
 static s16 hostMdl = -1;
 
-static const s32 starMesTbl1[9] = {
+static const s32 starMesTbl1[MAX_BOARD_COUNT] = {
     MAKE_MESSID(12, 0),
     MAKE_MESSID(12, 9),
     MAKE_MESSID(12, 18),
@@ -83,10 +83,13 @@ static const s32 starMesTbl1[9] = {
     MAKE_MESSID(12, 45),
     MAKE_MESSID(12, 0),
     MAKE_MESSID(12, 0),
-    MAKE_MESSID(12, 0)
+    MAKE_MESSID(12, 0),
+#if EXPAND_BOARD_PATCH
+    CUSTOM_STAR_MESS1
+#endif
 };
 
-static const s32 starMesTbl2[9][2] = {
+static const s32 starMesTbl2[MAX_BOARD_COUNT][2] = {
     { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) },
     { MAKE_MESSID(21, 35), MAKE_MESSID(21, 41) },
     { MAKE_MESSID(21, 36), MAKE_MESSID(21, 42) },
@@ -95,7 +98,10 @@ static const s32 starMesTbl2[9][2] = {
     { MAKE_MESSID(21, 39), MAKE_MESSID(21, 45) },
     { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) },
     { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) },
-    { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) }
+    { MAKE_MESSID(21, 34), MAKE_MESSID(21, 40) },
+#if EXPAND_BOARD_PATCH
+    CUSTOM_STAR_MESS2
+#endif
 };
 
 s32 boardStarSndTbl[] = {
@@ -109,13 +115,20 @@ s32 boardStarSndTbl[] = {
     0x000002E0
 };
 
-static s32 hostMotTbl[9][2] = {
+static s32 hostMotTbl[MAX_BOARD_COUNT][2] = {
     { DATA_MAKE_NUM(DATADIR_W01, 33), DATA_MAKE_NUM(DATADIR_BOARD, 157) },
     { DATA_MAKE_NUM(DATADIR_W02, 7), DATA_MAKE_NUM(DATADIR_BOARD, 158) },
     { DATA_MAKE_NUM(DATADIR_W03, 31), DATA_MAKE_NUM(DATADIR_BOARD, 159) },
     { DATA_MAKE_NUM(DATADIR_W04, 11), DATA_MAKE_NUM(DATADIR_BOARD, 160) },
     { DATA_MAKE_NUM(DATADIR_W05, 9), DATA_MAKE_NUM(DATADIR_BOARD, 161) },
-    { DATA_MAKE_NUM(DATADIR_W06, 21), DATA_MAKE_NUM(DATADIR_BOARD, 162) }
+    { DATA_MAKE_NUM(DATADIR_W06, 21), DATA_MAKE_NUM(DATADIR_BOARD, 162) },
+#if EXPAND_BOARD_PATCH
+    // Dummy slots
+    { DATA_MAKE_NUM(DATADIR_W01, 33), DATA_MAKE_NUM(DATADIR_BOARD, 157) },
+    { DATA_MAKE_NUM(DATADIR_W01, 33), DATA_MAKE_NUM(DATADIR_BOARD, 157) },
+    { DATA_MAKE_NUM(DATADIR_W01, 33), DATA_MAKE_NUM(DATADIR_BOARD, 157) },
+    CUSTOM_STAR_HOST_MOT
+#endif
 };
 
 static HsfanimStruct00 starEffParam = {

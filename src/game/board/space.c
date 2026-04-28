@@ -13,6 +13,7 @@
 #include "game/hsfman.h"
 #include "game/objsub.h"
 #include "game/sprite.h"
+#include "party_editor/main.h"
 
 #include "ext_math.h"
 #include "string.h"
@@ -438,7 +439,17 @@ begin:
             }
             if (random_pos == 5) {
                 goto begin;
+            }        
+        default:
+#if EXPAND_BOARD_PATCH
+            if (star_total >= 2) {
+                break;
             }
+            if (random_pos != 6 && random_pos != 7) {
+                break;
+            }
+            goto begin;
+#endif
     }
     if ((1 << random_pos) & GWSystem.star_flag) {
         goto begin;
@@ -935,6 +946,7 @@ s32 BoardSpaceRead(s32 layer, s32 data_num)
     u8 *data;
     s32 star_idx;
     u8 *data_base;
+
     data_base = data = HuDataSelHeapReadNum(data_num, MEMORY_DEFAULT_NUM, HEAP_DATA);
     spaceCnt[layer] = *(u32 *)data;
     data += sizeof(u32);
@@ -963,6 +975,16 @@ s32 BoardSpaceRead(s32 layer, s32 data_num)
             boardSpaceStarTbl[star_idx] = i + 1;
         }
     }
+
+#if CUSTOM_BOARD_FIXES
+    // Force valid stars for custom board usage (0 is a value not set yet).
+    for (i = 0; i < 8; i++)
+    {
+        if (boardSpaceStarTbl[i] == 0)
+            boardSpaceStarTbl[i] = boardSpaceStarTbl[0];
+    }
+#endif
+
     HuDataClose(data_base);
     return 0;
 }
@@ -976,16 +998,24 @@ void BoardSpaceBlockPosSet(void)
 {
     BoardSpace *space;
     s32 block_pos;
+    OSReport("BoardSpaceBlockPosSet");
+
 begin:
     if (boardTutorialBlockF) {
         GWSystem.block_pos = boardTutorialBlockPos;
         return;
     }
+    OSReport("spaceCtn %d", spaceCnt[0]);
+
     block_pos = BoardRandMod(spaceCnt[0]) + 1;
+    OSReport("block_pos ", block_pos);
+
     if (block_pos == GWSystem.block_pos) {
         goto begin;
     }
     space = BoardSpaceGet(0, block_pos);
+    OSReport("space ", space->type);
+
     if (space->type != 1) {
         goto begin;
     }
@@ -1072,7 +1102,7 @@ void BoardSpaceInit(s32 data_num)
         GWSystem.star_total = 0;
         GWSystem.star_flag = 0;
     }
-    if (GWBoardGet() != BOARD_ID_EXTRA1 && GWBoardGet() != BOARD_ID_EXTRA2) {
+    if ((GWBoardGet() != BOARD_ID_EXTRA1 && GWBoardGet() != BOARD_ID_EXTRA2) || BOARD_IS_CUSTOM) {
         starPlatMdl = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BOARD, 6), NULL, 0);
         BoardModelMotionStart(starPlatMdl, 0, 0x40000001);
         BoardModelVisibilitySet(starPlatMdl, 0);

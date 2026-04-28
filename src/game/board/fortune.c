@@ -104,17 +104,8 @@ static void FortuneMain(void)
 {
 	s32 i;
 	s32 sp8 = -1;
-	s32 dir_table[] = {
-		DATADIR_W01,
-		DATADIR_W02,
-		DATADIR_W03,
-		DATADIR_W04,
-		DATADIR_W05,
-		DATADIR_W06,
-		DATADIR_W10,
-		DATADIR_W20,
-		DATADIR_W21
-	};
+	s32 dir_table[] = WORLD_DIR_TABLE;
+	
 	HuAudFXPlay(842);
 	BoardPlayerMotBlendSet(currPlayer, 0, 15);
 	while(!BoardPlayerMotBlendCheck(currPlayer)) {

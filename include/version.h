@@ -1,6 +1,8 @@
 #ifndef _VERSION_H
 #define _VERSION_H
 
+#define NON_MATCHING 1
+
 #define VERSION_NO_ENG0 0
 #define VERSION_NO_ENG1 1
 #define VERSION_NO_PAL0 2

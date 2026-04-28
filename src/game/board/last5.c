@@ -124,6 +124,10 @@ static s32 messBaseTbl[] = {
 	0,
 	0,
 	0,
+#if EXPAND_BOARD_PATCH
+	// Custom
+	CUSTOM_LAST5_MESS_TBL
+#endif
 };
 
 static float playerOfsTbl[][2] = {

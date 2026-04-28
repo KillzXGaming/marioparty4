@@ -65,37 +65,55 @@ static float overhead2DPos[][2] = {
 static float mapViewMinZ[] = {
     -2000.0f, -1500.0f, -2200.0f,
     -1800.0f, -2100.0f, -3000.0f,
-    -3000.0f, -1800.0f, -1800.0f
+    -3000.0f, -1800.0f, -1800.0f,
+#if EXPAND_BOARD_PATCH
+    CUSTOM_CAMERA_VIEW_MIN_Z
+#endif
 };
 
 static float mapViewMaxZ[] = {
     2300.0f, 2500.0f, 2600.0f,
     2000.0f, 2300.0f, 2500.0f,
-    2500.0f, 2000.0f, 2000.0f
+    2500.0f, 2000.0f, 2000.0f,
+#if EXPAND_BOARD_PATCH
+    CUSTOM_CAMERA_VIEW_MAX_Z
+#endif
 };
 
 static float mapViewMinX[] = {
     -3000.0f, -3000.0f, -3000.0f,
     -3000.0f, -3000.0f, -3000.0f,
-    -3000.0f, -2000.0f, -2000.0f
+    -3000.0f, -2000.0f, -2000.0f,
+#if EXPAND_BOARD_PATCH
+    CUSTOM_CAMERA_VIEW_MIN_X
+#endif
 };
 
 static float mapViewMaxX[] = {
     3000.0f, 3000.0f, 3000.0f,
     3000.0f, 3000.0f, 3000.0f,
-    3000.0f, 1600.0f, 2000.0f
+    3000.0f, 1600.0f, 2000.0f,
+#if EXPAND_BOARD_PATCH
+    CUSTOM_CAMERA_VIEW_MAX_X
+#endif
 };
 
 static float overheadCamZoom[] = {
     14370.0f, 14500.0f, 15000.0f,
     15000.0f, 13000.0f, 15000.0f,
-      100.0f, 10000.0f, 10000.0f
+      100.0f, 10000.0f, 10000.0f,
+#if EXPAND_BOARD_PATCH
+    CUSTOM_CAMERA_OVERHEAD_ZOOM
+#endif
 };
 
 static float overheadCamPosZ[] = {
     0.0f,    0.0f, 0.0f,
     0.0f,    0.0f, 0.0f,
-    0.0f, -160.0f, 0.0f
+    0.0f, -160.0f, 0.0f,
+#if EXPAND_BOARD_PATCH
+    CUSTOM_CAMERA_OVERHEAD_POSZ
+#endif
 };
 
 void BoardViewOverheadExec(s32 arg0) {

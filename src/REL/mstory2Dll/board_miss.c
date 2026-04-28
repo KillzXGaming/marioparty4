@@ -140,7 +140,11 @@ void fn_1_E638(void)
 
 void fn_1_E8EC(void)
 {
+#if EXPAND_BOARD_PATCH
+    int ovlTbl[MAX_BOARD_COUNT] = WORLD_OVERLAY_TABLE;
+#else
     int ovlTbl[7] = { OVL_W01, OVL_W02, OVL_W03, OVL_W04, OVL_W05, OVL_W06, OVL_W10 };
+#endif
     omOvlHisData *his;
     WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, -1);
     while (WipeStatGet()) {

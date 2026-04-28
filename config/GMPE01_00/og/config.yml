@@ -540,11 +540,6 @@ modules:
   symbols: config/GMPE01_00/rels/m401Dll/symbols.txt
   splits: config/GMPE01_00/rels/m401Dll/splits.txt
   links: [_minigameDll]
-- object: files/dll/w30Dll.rel
-  hash: b888f2c6703e680699ff8c59ad9200b9d78d30a1
-  symbols: config/GMPE01_00/rels/w30Dll/symbols.txt
-  splits: config/GMPE01_00/rels/w30Dll/splits.txt
-  links: []
 
 extract:
 - symbol: ank8x8_4b

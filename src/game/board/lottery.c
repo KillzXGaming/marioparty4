@@ -259,7 +259,7 @@ static void CreateModel(void) {
         DATA_MAKE_NUM(DATADIR_BKUJIYA, 3),
         DATA_MAKE_NUM(DATADIR_BKUJIYA, 4)
     };
-    s32 sp20[9][4] = {
+    s32 sp20[MAX_BOARD_COUNT][4] = {
         {
             DATA_MAKE_NUM(DATADIR_BGUEST, 1),
             DATA_MAKE_NUM(DATADIR_BGUEST, 2),
@@ -313,7 +313,10 @@ static void CreateModel(void) {
             DATA_MAKE_NUM(DATADIR_BGUEST, 43),
             DATA_MAKE_NUM(DATADIR_BGUEST, 44),
             DATA_MAKE_NUM(DATADIR_BGUEST, 45)
-        }
+        },
+#if EXPAND_BOARD_PATCH
+        CUSTOM_LOTTERY_GUEST
+    #endif
     };
 
     lotteryMdl[1] = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BKUJIYA, 1), NULL, 0);
@@ -462,6 +465,11 @@ static void ExecLottery(void) {
             break;
         case BOARD_ID_EXTRA2:
             lotteryMessBase = MAKE_MESSID(6, 82);
+            break;
+        default:
+#if EXPAND_BOARD_PATCH
+            lotteryMessBase = CUSTOM_LOTTERY_MESSID
+#endif
             break;
     }
     temp_r29 = BoardDataDirReadAsync(DATADIR_BKUJIYA);

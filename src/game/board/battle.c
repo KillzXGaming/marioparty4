@@ -150,6 +150,10 @@ static void ExecBattle(void) {
     s32 var_r23;
     MgInfo *var_r29;
     s32 var_r27 = 0;
+
+#if EXPAND_BOARD_PATCH
+    s32 sp8[] = WORLD_DIR_TABLE;
+#else
     s32 sp8[] = {
         DATADIR_W01,
         DATADIR_W02,
@@ -161,6 +165,7 @@ static void ExecBattle(void) {
         DATADIR_W20,
         DATADIR_W21
     };
+#endif
 
     var_r29 = mgInfoTbl;
     for (var_r31 = var_r30 = 0; var_r29->ovl != (u16) OVL_INVALID; var_r29++, var_r31++) {

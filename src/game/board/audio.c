@@ -11,7 +11,10 @@ static s32 boardFX = -1;
 static s16 boardMusTbl[] = {
     0x000D, 0x0011, 0x0015,
     0x001C, 0x0021, 0x0025,
-    0x0028, 0x0029, 0x002A
+    0x0028, 0x0029, 0x002A,
+#if EXPAND_BOARD_PATCH
+    CUSTOM_MUSIC_ID
+#endif
 };
 
 void BoardMusStartBoard(void) {
@@ -19,7 +22,7 @@ void BoardMusStartBoard(void) {
 
     BoardMusStart(0, musIdx, 0x7F, 0);
     BoardAudFXPlay();
-}
+}   
 
 void BoardMusStart(s32 boardNo, s32 musId, s8 vol, u16 speed) {
     s16 *board = boardSeq[boardNo];

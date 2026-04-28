@@ -151,7 +151,12 @@ void fn_1_A8F8(void) {
 
 void fn_1_ABAC(void) {
     omOvlHisData* var_r30;
-    s32 sp8[] = { OVL_W01, OVL_W02, OVL_W03, OVL_W04, OVL_W05, OVL_W06, OVL_W10 };
+
+#if EXPAND_BOARD_PATCH
+    int sp8[] = WORLD_OVERLAY_TABLE;
+#else
+    int sp8[] = { OVL_W01, OVL_W02, OVL_W03, OVL_W04, OVL_W05, OVL_W06, OVL_W10 };
+#endif
 
     WipeColorSet(0xFF, 0xFF, 0xFF);
     WipeCreate(WIPE_MODE_OUT, WIPE_TYPE_NORMAL, -1);

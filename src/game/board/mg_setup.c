@@ -78,10 +78,13 @@ static Vec statusLayout2Vs2[4] = {
     { 406.0f, 260.0f, 0.0f },
     { 406.0f, 348.0f, 0.0f },
 };
-static s32 luckyMessTbl[9] = {
+static s32 luckyMessTbl[MAX_BOARD_COUNT] = {
     MAKE_MESSID(0x14, 0x00), MAKE_MESSID(0x14, 0x05), MAKE_MESSID(0x14, 0x0A), MAKE_MESSID(0x14, 0x0F),
     MAKE_MESSID(0x14, 0x14), MAKE_MESSID(0x14, 0x19), MAKE_MESSID(0x14, 0x00), MAKE_MESSID(0x14, 0x00),
-    MAKE_MESSID(0x14, 0x00)
+    MAKE_MESSID(0x14, 0x00),
+#if EXPAND_BOARD_PATCH
+    CUSTOM_LUCKY_MESS
+#endif
 };
 
 // sbss
@@ -146,11 +149,17 @@ static inline s32 setupObjGet(void) {
 }
 
 static void ExecMGSetup(void) {
+
+#if EXPAND_BOARD_PATCH
+    s32 sp60[MAX_BOARD_COUNT] = WORLD_DIR_TABLE;
+#else
     s32 sp60[9] = {
         DATADIR_W01, DATADIR_W02, DATADIR_W03,
         DATADIR_W04, DATADIR_W05, DATADIR_W06,
         DATADIR_W10, DATADIR_W20, DATADIR_W21
     };
+#endif
+
     Vec sp54;
     u16 var_r24;
     s32 var_r22;

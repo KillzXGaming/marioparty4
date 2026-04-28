@@ -125,6 +125,13 @@ void ObjectSetup(void)
     if (mgBoardHostEnableF) {
         instHostNo = 1;
     }
+
+#if EXPAND_BOARD_PATCH
+    // Make host default to 0 when custom board ID is used
+    if (instHostNo >= 9)
+        instHostNo = 0;
+#endif
+
     cameraRot[1].x = cameraRot[1].y = cameraRot[1].z = 0.0f;
     cameraPos[1].x = cameraPos[1].y = cameraPos[1].z = 0.0f;
     cameraZoom[1] = 1000.0f;

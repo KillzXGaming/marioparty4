@@ -188,7 +188,14 @@ static s32 hostMess[] = {
     MAKE_MESSID(7, 26),
     MAKE_MESSID(7, 32),
     MAKE_MESSID(7, 38),
-    MAKE_MESSID(7, 44)
+    MAKE_MESSID(7, 44),
+#if EXPAND_BOARD_PATCH
+    // Dummy slots
+    MAKE_MESSID(7, 44),
+    MAKE_MESSID(7, 44),
+    // Custom
+    CUSTOM_BOO_MESS
+#endif
 };
 
 static s32 ballMdlTbl[] = {

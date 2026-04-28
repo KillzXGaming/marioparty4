@@ -21,6 +21,7 @@
 #include "game/pad.h"
 #include "game/disp.h"
 #include "game/msm.h"
+#include "party_editor/main.h"
 
 typedef struct camera_view {
     s16 x_rot;
@@ -157,6 +158,11 @@ void BoardObjectSetup(BoardFunc create, BoardFunc destroy)
 
         case OVL_W21:
             GWSystem.board = BOARD_ID_EXTRA2;
+            break;
+        default:
+#if EXPAND_BOARD_PATCH
+            GWSystem.board = GET_BOARD_ID;
+#endif
             break;
     }
 }
@@ -682,6 +688,9 @@ static void CreateBoard(void)
 
 static void DestroyBoard(void)
 {
+#if EXPAND_BOARD_PATCH
+    s32 dir_table[] = WORLD_DIR_TABLE;
+#else
     s32 dir_table[] = {
         DATADIR_W01,
         DATADIR_W02,
@@ -693,6 +702,8 @@ static void DestroyBoard(void)
         DATADIR_W20,
         DATADIR_W21
     };
+#endif
+
     BoardTauntKill();
     BoardAudSeqFadeOutAll();
     HuAudAllStop();
