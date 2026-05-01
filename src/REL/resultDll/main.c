@@ -849,7 +849,14 @@ static void ResultOrderSet(void)
     }
 }
 
-static s32 resultBoardDirTbl[] = { DATADIR_W01, DATADIR_W02, DATADIR_W03, DATADIR_W04, DATADIR_W05, DATADIR_W06 };
+static s32 resultBoardDirTbl[] = { DATADIR_W01, DATADIR_W02, DATADIR_W03, DATADIR_W04, DATADIR_W05, DATADIR_W06,
+#if EXPAND_BOARD_PATCH
+    DATADIR_W10,
+    DATADIR_W20,
+    DATADIR_W21,
+    CUSTOM_BOARD_DIRS
+#endif
+};
 
 void ResultBoardDataRead(void)
 {

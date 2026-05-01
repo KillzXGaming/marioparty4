@@ -26,12 +26,18 @@ static u32 winInsertMesTbl[8];
 static s32 PortraitTbl[] = {
     0,  4,  2,  3,
     7,  6,  0,  12,
-    12, 
+    12,
+#if EXPAND_BOARD_PATCH
+    HOST_PORTAIT
+#endif
 };
 static s32 StarPortraitTbl[] = {
     13, 16, 14, 15,
     18, 6,  13, 12,
-    12
+    12,
+#if EXPAND_BOARD_PATCH
+    STAR_HOST_PORTAIT
+#endif
 };
 
 static s16 windowID = -1;

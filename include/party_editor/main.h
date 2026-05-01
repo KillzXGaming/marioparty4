@@ -29,6 +29,9 @@
     #define MAX_BOARD6_COUNT 6 
 #endif
 
+#define HOST_PORTAIT 0
+#define STAR_HOST_PORTAIT 13
+
 #define GET_BOARD_ID                   \
 if (omcurovl == OVL_W30)                \
     GWSystem.board = BOARD_ID_CUSTOM1; \
@@ -62,14 +65,14 @@ if (omcurovl == OVL_W30)                \
 #define CUSTOM_LAST5_MESS_TBL MAKE_MESSID(14, 0)
 #define CUSTOM_LAST5_MOT_TBL                                \
 {                                                             \
-    DATA_MAKE_NUM(DATADIR_BLAST5, 63),                       \
-    DATA_MAKE_NUM(DATADIR_BLAST5, 64),                       \
-    DATA_MAKE_NUM(DATADIR_BLAST5, 65),                       \
-    DATA_MAKE_NUM(DATADIR_BLAST5, 66),                       \
-    DATA_MAKE_NUM(DATADIR_BLAST5, 67),                       \
-    DATA_MAKE_NUM(DATADIR_BLAST5, 68),                        \
-    DATA_MAKE_NUM(DATADIR_BLAST5, 69),                        \
-    DATA_MAKE_NUM(DATADIR_BLAST5, 70),                        \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 24),                       \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 25),                       \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 26),                       \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 27),                       \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 28),                       \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 29),                        \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 30),                        \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 31),                        \
 }
 
 // view.c Controls the camera top view size
