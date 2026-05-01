@@ -193,6 +193,7 @@ static s32 hostMess[] = {
     // Dummy slots
     MAKE_MESSID(7, 44),
     MAKE_MESSID(7, 44),
+    MAKE_MESSID(7, 44),
     // Custom
     CUSTOM_BOO_MESS
 #endif

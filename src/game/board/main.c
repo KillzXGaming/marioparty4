@@ -161,7 +161,7 @@ void BoardObjectSetup(BoardFunc create, BoardFunc destroy)
             break;
         default:
 #if EXPAND_BOARD_PATCH
-            GWSystem.board = GET_BOARD_ID;
+            GET_BOARD_ID;
 #endif
             break;
     }

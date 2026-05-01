@@ -230,6 +230,34 @@ s32 msmStreamStop(int streamNo, s32 speed) {
     return 0;
 }
 
+s32 msmStreamPause(int streamNo, BOOL pause, s32 speed) {
+    MSM_STREAM_SLOT* slot;
+    s32 i;
+
+    slot = &StreamInfo.slot[streamNo];
+    OSReport("msmStreamPause %d pauseTime %d pauseF %d \n", slot->status, slot->pauseTime, slot->pauseF);
+
+    if (pause)
+    {
+        msmStreamPauseOn(streamNo, 0);
+        if (slot->slotL != -1)
+            msmStreamPauseOn(slot->slotL, 0);
+    }
+    else {
+        slot->pauseTime = 1;
+        if (slot->slotL != -1)
+        {
+            slot = &StreamInfo.slot[slot->slotL];
+            slot->pauseTime = 1;
+        }
+
+        msmStreamPauseOff(streamNo);
+        if (slot->slotL != -1)
+            msmStreamPauseOff(slot->slotL);
+    }
+    return 1;
+}
+
 int msmStreamPlay(int streamId, MSM_STREAMPARAM* streamParam) {
     if (streamId < 0 || streamId >= StreamInfo.header.streamMax) {
         return MSM_ERR_INVALIDID;
@@ -375,6 +403,7 @@ static void msmStreamPauseOff(s32 streamNo) {
     u32 readSize;
 
     slot = &StreamInfo.slot[streamNo];
+
     if (slot->pauseTime == 0) {
         return;
     }
@@ -382,6 +411,7 @@ static void msmStreamPauseOff(s32 streamNo) {
         slot->pauseTime = 0;
         return;
     }
+
     if (slot->pauseTimeMax != 0) {
         slot->pauseTimeMax = -(slot->pauseTime + 1);
         if (slot->pauseTimeMax == 0) {

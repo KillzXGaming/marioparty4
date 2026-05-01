@@ -347,6 +347,10 @@ void HuAudSStreamAllStop(void) {
     msmStreamStopAll(0);
 }
 
+void HuAudSStreamPauseFadeOut(s16 streamNo, BOOL pause, s32 speed) {
+    msmStreamPause(streamNo, (pause) ? TRUE : FALSE, speed);
+}
+
 s32 HuAudSStreamStatGet(s32 seNo) {
     return msmStreamGetStatus(seNo);
 }
@@ -438,14 +442,14 @@ SNDGRPTBL sndGrpTable[] = {
     { OVL_W10, 15, 0,  1, -1, -1 },
     { OVL_W20, 16, 0,  1, -1, -1 },
     { OVL_W21, 17, 0,  1, -1, -1 },
+#if EXPAND_BOARD_PATCH
+    CUSTOM_AUDIO_SND,
+#endif
     { OVL_MPEX, 4, 0,  1, -1, -1 },
     { OVL_ZTAR, -1, 0,  1, -1, -1 },
     { OVL_E3SETUP, 0, 0,  1, -1, -1 },
     { OVL_STAFF, -1, 0,  1, -1, -1 },
     { OVL_INVALID, -1, 0,  1, 0, 0 },
-#if EXPAND_BOARD_PATCH
-    CUSTOM_AUDIO_SND
-#endif
 };
 
 void HuAudDllSndGrpSet(u16 ovl) {

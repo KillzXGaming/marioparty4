@@ -3,6 +3,9 @@
 #define PARTY_EDITOR_MAIN_H
 
 #define BOARD_ID_CUSTOM1 9
+#define BOARD_ID_CUSTOM2 10
+#define BOARD_ID_CUSTOM3 12
+#define BOARD_ID_CUSTOM4 13
 
 // Patch to expand board data
 #define EXPAND_BOARD_PATCH NON_MATCHING && 1
@@ -23,7 +26,10 @@
     #define MAX_BOARD6_COUNT 6 
 #endif
 
-#define GET_BOARD_ID BOARD_ID_CUSTOM1
+#define GET_BOARD_ID                   \
+if (omcurovl == OVL_W30)                \
+    GWSystem.board = BOARD_ID_CUSTOM1; \
+
 
 #if EXPAND_BOARD_PATCH
     // Add multiple overlays for new slots, ie OVL_W30, OVL_W31
@@ -37,7 +43,13 @@
 
  
 // Audio sound data for board
-#define CUSTOM_AUDIO_SND { OVL_W30, -1, 0,  1, 0, 0 }
+#define CUSTOM_AUDIO_SND { OVL_W30, 10, 0,  1, -1, -1 }
+
+// game/board/audio.c. This MUST be part of CUSTOM_AUDIO_SND group ie OVL_W30, 9
+#define CUSTOM_MUSIC_ID 23, 24, 25, 26, 27, 28, 29, 30
+
+// item.c ExecItemWhistle()
+#define FORCE_MOVE_SFX 0x38
 
 // callAttackMotTbl[] from item.c
 #define CUSTOM_CALL_ATTACK_MOT1 DATA_MAKE_NUM(DATADIR_W01, 31)
@@ -45,12 +57,23 @@
 
 // messBaseTbl[] from last5.c
 #define CUSTOM_LAST5_MESS_TBL MAKE_MESSID(14, 0)
+#define CUSTOM_LAST5_MOT_TBL                                \
+{                                                             \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 63),                       \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 64),                       \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 65),                       \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 66),                       \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 67),                       \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 68),                        \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 69),                        \
+    DATA_MAKE_NUM(DATADIR_BLAST5, 70),                        \
+}
 
 // view.c Controls the camera top view size
 #define CUSTOM_CAMERA_VIEW_MIN_Z -1800.0
 #define CUSTOM_CAMERA_VIEW_MAX_Z 2000.0
 #define CUSTOM_CAMERA_VIEW_MIN_X -2000.0
-#define CUSTOM_CAMERA_VIEW_MAX_X 2000.0
+#define CUSTOM_CAMERA_VIEW_MAX_X 8000.0
 #define CUSTOM_CAMERA_OVERHEAD_ZOOM 10000.0
 #define CUSTOM_CAMERA_OVERHEAD_POSZ 0.0
 
@@ -61,13 +84,15 @@
 // boo_house.c
 #define CUSTOM_BOO_HOUSE_HOST_MESS                                \
 {                                                             \
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x2A),                       \
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x2B),                       \
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x2C),                       \
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x2D),                       \
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x2E),                       \
-    DATA_MAKE_NUM(DATADIR_BOARD, 0x2F)                        \
+    DATA_MAKE_NUM(DATADIR_BOARD, 0x0C),                       \
+    DATA_MAKE_NUM(DATADIR_BOARD, 0x0D),                       \
+    DATA_MAKE_NUM(DATADIR_BOARD, 0x0E),                       \
+    DATA_MAKE_NUM(DATADIR_BOARD, 0x0F),                       \
+    DATA_MAKE_NUM(DATADIR_BOARD, 0x10),                       \
+    DATA_MAKE_NUM(DATADIR_BOARD, 0x11)                        \
 }
+
+#define CUSTOM_BOO_HOUSE_HOST { DATA_MAKE_NUM(DATADIR_BGUEST, 0x01), DATA_MAKE_NUM(DATADIR_BGUEST, 0x03), DATA_MAKE_NUM(DATADIR_BGUEST, 0x04) }
 
 // boo.c hostMess
 #define CUSTOM_BOO_MESS MAKE_MESSID(7, 14)
@@ -102,9 +127,6 @@
 #define CUSTOM_BOARD_START_MESS { MAKE_MESSID(0x15, 0x3B), MAKE_MESSID(0x15, 0x3C), MAKE_MESSID(0x15, 0x3D), MAKE_MESSID(0x15, 0x3E), MAKE_MESSID(0x15, 0x3F) }
 // mg_setup.c luckyMessTbl
 #define CUSTOM_LUCKY_MESS MAKE_MESSID(0x14, 0x00)
-
-// game/board/audio.c
-#define CUSTOM_MUSIC_ID 0x000D
 
 // shop.c hostMessTbl
 #define CUSTOM_SHOP_MESSID MAKE_MESSID(0x0F, 0x04)

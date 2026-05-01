@@ -112,6 +112,9 @@ static s32 hostMotTbl[][8] = {
 		0,
 		0,
 	},
+#if EXPAND_BOARD_PATCH
+	CUSTOM_LAST5_MOT_TBL
+#endif
 };
 
 static s32 messBaseTbl[] = {
@@ -572,7 +575,13 @@ static void Last5Main(void)
 			HuPrcVSleep();
 		}
 		BoardStatusItemSet(0);
+
+#if EXPAND_BOARD_PATCH
+		temp_r24 = MAKE_MESSID(14, 144); // TODO
+#else
 		temp_r24 = MAKE_MESSID(14, 144) + GWBoardGet();
+#endif
+
 		BoardWinCreate(2, temp_r24, BoardWinPortraitGetStar());
 		BoardWinWait();
 		for(temp_r31=0; temp_r31<2; temp_r31++) {

@@ -1021,6 +1021,7 @@ void BoardShopTutorialExec(void);
 void BoardLotteryTutorialExec(void);
 void BoardBooHouseTutorialExec(void);
 #if NON_MATCHING
+void msmStreamPause(void);
 void PartyEditorBoot(void);
 #endif
 extern void _kerjmp_OSDumpStopwatch(void);
@@ -2043,6 +2044,7 @@ extern void _kerjmp_BoardShopTutorialExec(void);
 extern void _kerjmp_BoardLotteryTutorialExec(void);
 extern void _kerjmp_BoardBooHouseTutorialExec(void);
 #if NON_MATCHING
+extern void _kerjmp_msmStreamPause(void);
 extern void _kerjmp_PartyEditorBoot(void);
 #endif
 
@@ -4093,6 +4095,8 @@ asm void _kerent(void) {
     b BoardBooHouseTutorialExec
 
 #if NON_MATCHING
+    entry _kerjmp_msmStreamPause
+    b msmStreamPause
     entry _kerjmp_PartyEditorBoot
     b PartyEditorBoot
 #endif

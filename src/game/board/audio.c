@@ -5,6 +5,7 @@
 #include "game/board/main.h"
 
 static s16 boardSeq[2][2];
+static s16 boardStream[2];
 
 static s32 boardFX = -1;
 
@@ -17,10 +18,17 @@ static s16 boardMusTbl[] = {
 #endif
 };
 
+#define UseStream NON_MATCHING && GWBoardGet() >= 9
+
 void BoardMusStartBoard(void) {
     s16 musIdx = boardMusTbl[GWBoardGet()];
-
-    BoardMusStart(0, musIdx, 0x7F, 0);
+    // Toggle streaming for first layer
+    if (UseStream) {
+        boardStream[0] = 1;
+        BoardMusStart(0, musIdx, 0x7F, 0);
+    }
+    else
+        BoardMusStart(0, musIdx, 0x7F, 0);
     BoardAudFXPlay();
 }   
 
@@ -42,6 +50,15 @@ void BoardMusStart(s32 boardNo, s32 musId, s8 vol, u16 speed) {
         param.flag |= MSM_MUSPARAM_VOL;
         vol = 0x7F;
     }
+
+    if (UseStream && boardStream[boardNo]) {
+
+        board[0] = HuAudSStreamPlay(musId);
+        board[1] = musId;
+        OSReport("BoardMusStart %d,%d\n", board[0], board[1]);
+        return;
+    }
+
     param.fadeSpeed = speed;
     param.vol = vol;
     param.chan = boardNo;
@@ -55,11 +72,14 @@ void BoardAudSeqFadeOutFast(s32 boardNo) {
 
 void BoardAudSeqFadeOut(s32 boardNo, u16 speed) {
     s16 *board = boardSeq[boardNo];
-
     if (board[0] == -1) {
         return;
     }
-    HuAudSeqFadeOut(board[0], speed);
+
+    if (UseStream && boardStream[boardNo])
+        HuAudSStreamFadeOut(board[0], (s32)speed);
+    else
+        HuAudSeqFadeOut(board[0], speed);
     board[1] = board[0] = -1;
 }
 
@@ -90,10 +110,28 @@ void BoardMusVolPanSet(s32 boardNo, s8 vol, u16 fadeSpeed) {
 
 void BoardAudSeqPause(s32 boardNo, s32 pause, u16 speed) {
     s16 *board = boardSeq[boardNo];
-
     if (board[0] == -1) {
         return;
     }
+
+    if (UseStream && boardStream[boardNo])
+    {
+        if (pause != 0) {
+            if (HuAudSStreamStatGet(boardNo) == 3)
+                return;
+        }
+        else
+        {
+            if (HuAudSStreamStatGet(boardNo) != 3)
+                return;
+        }
+        OSReport("Pausing stream %d\n", board[0]);
+        // Pausing does not work for some reason (ie entering shops)
+        // So fade it out
+        HuAudSStreamPauseFadeOut(board[0], pause, speed);
+        return;
+    }
+
     if (pause != 0) {
         if (BoardMusStatusGet(boardNo) == 3) {
             return;
@@ -115,7 +153,6 @@ s32 BoardMusStatusGet(s32 boardNo) {
 
 void BoardAudSeqClear(void) {
     s32 i;
-
     for (i = 0; i < 2; i++) {
         boardSeq[i][0] = boardSeq[i][1] = -1;
     }
@@ -129,7 +166,10 @@ void BoardAudSeqFadeOutAll(void) {
     for (i = 0; i < 2; i++) {
         temp_r31 = boardSeq[i];
         if (temp_r31[0] != -1) {
-            HuAudSeqFadeOut(temp_r31[0], 0x64);
+            if (UseStream && boardStream[0])
+                HuAudSStreamFadeOut(temp_r31[0], (s32)0x64);
+            else
+                HuAudSeqFadeOut(temp_r31[0], 0x64);
             temp_r31[1] = temp_r31[0] = -1;
         }
     }
