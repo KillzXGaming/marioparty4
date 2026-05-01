@@ -18,12 +18,10 @@ static s16 boardMusTbl[] = {
 #endif
 };
 
-#define UseStream NON_MATCHING && USE_STREAM_MUSIC
-
 void BoardMusStartBoard(void) {
     s16 musIdx = boardMusTbl[GWBoardGet()];
     // Toggle streaming for first layer
-    if (UseStream) {
+    if (USE_STREAM_MUSIC) {
         boardStream[0] = 1;
         BoardMusStart(0, musIdx, 0x7F, 0);
     }
@@ -51,7 +49,7 @@ void BoardMusStart(s32 boardNo, s32 musId, s8 vol, u16 speed) {
         vol = 0x7F;
     }
 
-    if (UseStream && boardStream[boardNo]) {
+    if (USE_STREAM_MUSIC && boardStream[boardNo]) {
 
         board[0] = HuAudSStreamPlay(musId);
         board[1] = musId;
@@ -76,7 +74,7 @@ void BoardAudSeqFadeOut(s32 boardNo, u16 speed) {
         return;
     }
 
-    if (UseStream && boardStream[boardNo])
+    if (USE_STREAM_MUSIC && boardStream[boardNo])
         HuAudSStreamFadeOut(board[0], (s32)speed);
     else
         HuAudSeqFadeOut(board[0], speed);
@@ -114,7 +112,7 @@ void BoardAudSeqPause(s32 boardNo, s32 pause, u16 speed) {
         return;
     }
 
-    if (UseStream && boardStream[boardNo])
+    if (USE_STREAM_MUSIC && boardStream[boardNo])
     {
         if (pause != 0) {
             if (HuAudSStreamStatGet(boardNo) == 3)
@@ -166,7 +164,7 @@ void BoardAudSeqFadeOutAll(void) {
     for (i = 0; i < 2; i++) {
         temp_r31 = boardSeq[i];
         if (temp_r31[0] != -1) {
-            if (UseStream && boardStream[0])
+            if (USE_STREAM_MUSIC && boardStream[0])
                 HuAudSStreamFadeOut(temp_r31[0], (s32)0x64);
             else
                 HuAudSeqFadeOut(temp_r31[0], 0x64);
