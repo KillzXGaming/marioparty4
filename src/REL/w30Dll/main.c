@@ -24,10 +24,8 @@ static s16 starHostMdl = -1;
 
 static s32 starHostMotTbl[] = { DATA_MAKE_NUM(DATADIR_W01, 30), -1 };
 
-static s32 hostMotTbl[] = {
-	DATA_MAKE_NUM(DATADIR_BGUEST, 42),
-	-1
-};
+static s32 hostMotTbl[] = { DATA_MAKE_NUM(DATADIR_BGUEST, 1), -1 };
+
 static void ReadCustomFile(s32 data_num);
 static void LightSetHook(void);
 static void LightResetHook(void);
@@ -37,6 +35,8 @@ static s32 LandEvent(void);
 
 void BoardCreate(void)
 {
+	s32 temp_r31 = 0;
+
 	BoardSpaceInit(W30_SPACEDATA);
 	bgMdl = BoardModelCreate(W30_BACKGROUND, NULL, 0);
 	fn_8006DDE8(bgMdl, -1.0f);
@@ -52,7 +52,7 @@ void BoardCreate(void)
 	BoardModelPosSet(starHostMdl, 0.0f, 0.0f, 0.0f);
 	BoardModelMotionStart(starHostMdl, 1, HU3D_MOTATTR_LOOP);
 
-	hostMdl = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BGUEST, 41), hostMotTbl, 0);
+	hostMdl = BoardModelCreate(DATA_MAKE_NUM(DATADIR_BGUEST, 0), hostMotTbl, 0);
 	BoardModelPosSet(hostMdl, 0.0f, 0.0f, 0.0f);
 	BoardModelMotionStart(hostMdl, 1, HU3D_MOTATTR_LOOP);
 	BoardLightHookSet(LightSetHook, LightResetHook);
@@ -61,21 +61,6 @@ void BoardCreate(void)
 	BoardSpaceLandEventFuncSet(LandEvent);
 	BoardStarHostSet(starHostMdl);
 	BoardShopHostSet(hostMdl);
-}
-
-s32 GetIndexByString()
-{
-
-}
-
-void ReadStringTable(s32 data_num) {
-	u8* data;
-	u8* data_base;
-	data_base = data = HuDataSelHeapReadNum(data_num, MEMORY_DEFAULT_NUM, HEAP_DATA);
-
-
-
-	HuDataClose(data_base);
 }
 
 void BoardDestroy(void)
