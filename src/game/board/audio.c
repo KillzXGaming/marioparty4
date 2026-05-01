@@ -18,7 +18,7 @@ static s16 boardMusTbl[] = {
 #endif
 };
 
-#define UseStream NON_MATCHING && GWBoardGet() >= 9
+#define UseStream NON_MATCHING && USE_STREAM_MUSIC
 
 void BoardMusStartBoard(void) {
     s16 musIdx = boardMusTbl[GWBoardGet()];

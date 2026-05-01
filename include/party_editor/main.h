@@ -13,6 +13,8 @@
 #define AUTO_BOOT_MODE NON_MATCHING && 1
 // The board ID to boot into
 #define AUTO_BOOT_BOARD_ID 0
+// We use stream music for any custom boards rather than sound sequences
+#define USE_STREAM_MUSIC GWBoardGet() >= 9
 
 #if EXPAND_BOARD_PATCH
     // Total board count. Must match the amount of new slots being added
