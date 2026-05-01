@@ -439,9 +439,9 @@ begin:
             }
             if (random_pos == 5) {
                 goto begin;
-            }        
-        default:
+            }      
 #if EXPAND_BOARD_PATCH
+        default:
             if (star_total >= 2) {
                 break;
             }
@@ -998,23 +998,19 @@ void BoardSpaceBlockPosSet(void)
 {
     BoardSpace *space;
     s32 block_pos;
-    OSReport("BoardSpaceBlockPosSet");
 
 begin:
     if (boardTutorialBlockF) {
         GWSystem.block_pos = boardTutorialBlockPos;
         return;
     }
-    OSReport("spaceCtn %d", spaceCnt[0]);
 
     block_pos = BoardRandMod(spaceCnt[0]) + 1;
-    OSReport("block_pos ", block_pos);
 
     if (block_pos == GWSystem.block_pos) {
         goto begin;
     }
     space = BoardSpaceGet(0, block_pos);
-    OSReport("space ", space->type);
 
     if (space->type != 1) {
         goto begin;
